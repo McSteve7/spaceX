@@ -1,4 +1,4 @@
-const axios = require ('axios')
+const axios = require('axios')
 const { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLSchema, } = require('graphql');
 
 // Launch Type
@@ -24,10 +24,10 @@ const RocketType = new GraphQLObjectType({
         rocket_id: { type: GraphQLString },
         rocket_name: { type: GraphQLString },
         rocket_type: { type: GraphQLString }
-      
+
     })
 })
- 
+
 // Root Query
 const RootQuery = new GraphQLObjectType({
     name: 'RootQuery',
@@ -36,7 +36,7 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(LaunchType),
             resolve(parent, args) {
                 return axios.get('https://api.spacexdata.com/v3/launches')
-                .then(res => res.data);
+                    .then(res => res.data);
             }
         },
         launch: {
@@ -45,15 +45,15 @@ const RootQuery = new GraphQLObjectType({
                 flight_number: { type: GraphQLInt }
             },
             resolve(parent, args) {
-            return axios.get(`https://api.spacexdata.com/v3/launches/${args.flight_number}`)
-            .then (res => res.data)
+                return axios.get(`https://api.spacexdata.com/v3/launches/${args.flight_number}`)
+                    .then(res => res.data)
             }
         },
         rockets: {
             type: new GraphQLList(RocketType),
             resolve(parent, args) {
                 return axios.get('https://api.spacexdata.com/v3/launches')
-                .then(res => res.data);
+                    .then(res => res.data);
             }
         },
         rocket: {
@@ -62,8 +62,8 @@ const RootQuery = new GraphQLObjectType({
                 flight_number: { type: GraphQLInt }
             },
             resolve(parent, args) {
-            return axios.get(`https://api.spacexdata.com/v3/rockets/${args.id}`)
-            .then (res => res.data)
+                return axios.get(`https://api.spacexdata.com/v3/rockets/${args.id}`)
+                    .then(res => res.data)
             }
         }
     }
